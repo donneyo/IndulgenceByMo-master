@@ -1,0 +1,68 @@
+.container {
+  padding: 50px;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap; /* Allow items to wrap on small screens */
+}
+
+.item {
+  flex: 1;
+  min-width: 300px; /* Prevent it from shrinking too small */
+  overflow-x: auto; /* Allow table scroll on mobile */
+}
+
+.table {
+  width: 100%;
+  border-spacing: 20px;
+  text-align: left;
+  overflow-x: auto;
+}
+
+.button {
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:first-child {
+  background-color: teal;
+  margin-right: 10px;
+}
+
+.button:last-child {
+  background-color: crimson;
+}
+
+/* Responsive Design for Mobile */
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .item {
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px;
+    white-space: nowrap;
+  }
+
+  .button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
