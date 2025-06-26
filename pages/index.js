@@ -7,6 +7,7 @@ import AddButton from "../components/AddButton";
 import Featured from "../components/Featured";
 import BreadList from "../components/BreadList";
 import styles from "../styles/Home.module.css";
+import baseUrl from "../util/baseUrl";
 
 export default function Home({ breadList, admin }) {
   const [close, setClose] = useState(true);
@@ -53,7 +54,7 @@ export const getServerSideProps = async (ctx) => {
   };
 
   try {
-    const breadList = await fetchDataWithRetry("http://localhost:3000/api/products");
+    const breadList = await fetchDataWithRetry(`${baseUrl}/api/products`);
     return {
       props: {
         breadList,

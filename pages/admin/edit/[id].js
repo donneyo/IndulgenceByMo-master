@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import styles from "../../../styles/Product.module.css"; // Adjust to your stylesheet path
+import baseUrl from "../../../util/baseUrl"; // ✅ Added
 
 const EditProduct = () => {
   const router = useRouter();
@@ -14,13 +15,12 @@ const EditProduct = () => {
 
   useEffect(() => {
     if (id) {
-      // Fetch product by ID
       const fetchProduct = async () => {
         try {
-          const res = await axios.get(`http://localhost:3000/api/products/${id}`);
+          const res = await axios.get(`${baseUrl}/api/products/${id}`); // ✅ Updated
           setProduct(res.data);
           setTitle(res.data.title);
-          setPrice(res.data.prices[0]); // Assuming prices is an array
+          setPrice(res.data.prices[0]);
           setImg(res.data.img);
         } catch (err) {
           console.error("Error fetching product:", err);
@@ -34,12 +34,12 @@ const EditProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3000/api/products/${id}`, {
+      await axios.put(`${baseUrl}/api/products/${id}`, { // ✅ Updated
         title,
-        prices: [price], // Assuming it's a single price
+        prices: [price],
         img,
       });
-      router.push("/admin"); // Redirect back to the admin page after editing
+      router.push("/admin");
     } catch (err) {
       console.error("Error updating product:", err);
     }

@@ -192,6 +192,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import styles from "../../styles/Admin.module.css";
 import jwt from "jsonwebtoken";
+import baseUrl from "../../util/baseUrl";
 
 const Index = ({ orders, products }) => {
   const [BreadList, setBreadList] = useState(products);
@@ -201,7 +202,7 @@ const Index = ({ orders, products }) => {
 
   const clearClosedOrders = async () => {
     try {
-      const res = await axios.delete("http://localhost:3000/api/orders/clearClosed");
+      const res = await axios.delete(`${baseUrl}/api/orders/clearClosed`);
       alert(res.data.message);
       setOrderList(orderList.filter(order => order.status !== 3));
     } catch (error) {
@@ -219,7 +220,7 @@ const Index = ({ orders, products }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete("http://localhost:3000/api/products/" + id);
+      await axios.delete(`${baseUrl}/api/products/${id}`);
       setBreadList(BreadList.filter((bread) => bread._id !== id));
     } catch (err) {
       console.log(err);
@@ -231,7 +232,7 @@ const Index = ({ orders, products }) => {
     const currentStatus = item.status;
 
     try {
-      const res = await axios.put("http://localhost:3000/api/orders/" + id, {
+      const res = await axios.put(`${baseUrl}/api/orders/${id}`, {
         status: currentStatus + 1,
       });
       setOrderList([
@@ -245,7 +246,7 @@ const Index = ({ orders, products }) => {
 
   const handleDeleteOrder = async (id) => {
     try {
-      await axios.delete("http://localhost:3000/api/orders/" + id);
+      await axios.delete(`${baseUrl}/api/orders/${id}`);
       setOrderList(orderList.filter((order) => order._id !== id));
     } catch (err) {
       console.error("Failed to delete order:", err);
@@ -361,8 +362,8 @@ export const getServerSideProps = async (ctx) => {
   }
 
   try {
-    const productRes = await axios.get("http://localhost:3000/api/products");
-    const orderRes = await axios.get("http://localhost:3000/api/orders");
+    const productRes = await axios.get(`${baseUrl}/api/products`);
+    const orderRes = await axios.get(`${baseUrl}/api/orders`);
 
     return {
       props: {

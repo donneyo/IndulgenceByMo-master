@@ -4,28 +4,30 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import { reset } from "../redux/cartSlice";
 import OrderDetail from "../components/OrderDetail";
-import dynamic from "next/dynamic"; // Import dynamic from Next.js for Paystack
+import dynamic from "next/dynamic";
 import styles from "../styles/Cart.module.css";
 import Image from "next/image";
+import baseUrl from "../util/baseUrl"; // ✅ Added baseUrl
 
-// Dynamically import PaystackButton without server-side rendering
-const PaystackButton = dynamic(() => import("react-paystack").then(mod => mod.PaystackButton), { ssr: false });
+const PaystackButton = dynamic(
+  () => import("react-paystack").then((mod) => mod.PaystackButton),
+  { ssr: false }
+);
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false);
   const [cash, setCash] = useState(false);
-  const amount = cart.total * 100; // Amount in kobo (NGN)
+  const amount = cart.total * 100;
 
   const dispatch = useDispatch();
   const router = useRouter();
 
-  // Ensure publicKey is available
-  const publicKey = "pk_test_ed79e93cfe74a06f17c7701a837c83c9e01b52cc"; // Replace with your Paystack public key
+  const publicKey = "pk_test_ed79e93cfe74a06f17c7701a837c83c9e01b52cc";
 
   const createOrder = async (data) => {
     try {
-      const res = await axios.post("http://localhost:3000/api/orders", data);
+      const res = await axios.post(`${baseUrl}/api/orders`, data); // ✅ Updated
       if (res.status === 201) {
         dispatch(reset());
         router.push(`/orders/${res.data._id}`);
@@ -35,22 +37,19 @@ const Cart = () => {
     }
   };
 
-  // Paystack onSuccess callback
   const handlePaystackSuccessAction = (reference) => {
     createOrder({
       customer: "Customer Name",
       address: "Customer Address",
       total: cart.total,
-      method: 1, // 1 can indicate Paystack payment in your backend
+      method: 1,
     });
   };
 
-  // Paystack onClose callback
   const handlePaystackCloseAction = () => {
     console.log("Payment dialog closed");
   };
 
-  // Paystack config
   const paystackConfig = {
     reference: new Date().getTime().toString(),
     email: "customer@example.com",
@@ -133,7 +132,6 @@ const Cart = () => {
               >
                 CASH ON DELIVERY
               </button>
-              {/* Paystack Payment Button */}
               <PaystackButton
                 {...paystackConfig}
                 className={styles.payButton}
