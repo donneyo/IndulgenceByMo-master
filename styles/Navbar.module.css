@@ -154,6 +154,7 @@
 
 .logoWrapper {
   flex: 1;
+  background-color: #fef08a;
   display: flex;
   justify-content: center;
 }

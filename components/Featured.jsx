@@ -6,7 +6,7 @@ const Featured = () => {
   const [index, setIndex] = useState(0);
   const images = [
     "/img/feature5.png",
-    "/img/feature4.png",
+    "/img/feature7.png",
     "/img/feature6.png", // change if needed
   ];
 

@@ -34,11 +34,26 @@
   color: rgb(211, 211, 211);
 }
 
+
+.footerImage {
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 600px) {
+  .footerImage {
+    width: 150px !important;
+    height: auto !important;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .container {
     height: auto;
     text-align: center;
   }
+
+
   .item:first-child {
     display: none;
   }

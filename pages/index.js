@@ -20,7 +20,8 @@ export default function Home({ breadList, admin }) {
       </Head>
       <Featured />
 
-     <BreadList breadList={breadList} setClose={setClose} />
+     <BreadList breadList={breadList} setClose={setClose} admin={admin} />
+
 
       {!close && <Add setClose={setClose} />}
     </div>

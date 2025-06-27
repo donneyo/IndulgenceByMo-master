@@ -81,7 +81,7 @@ const Navbar = () => {
         </div>
 
         <div className={styles.logoWrapper}>
-          <Image src="/img/indulgencebymoResized.jpg" alt="" width="160" height="69" />
+          <Image src="/img/feature9.png" alt="" width="160" height="69" />
         </div>
 
 
